@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="../img/page/icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create event</title>
+    <link rel="stylesheet" href="../output.css">
+</head>
+
+<body class="container mx-auto dark:bg-slate-900">
+    <form id="submit-form" class="max-w-6xl" enctype="multipart/form-data">
+        <div id="error-message" class="text-red-500 mb-6"></div>
+        <div class="mb-5 block md:flex">
+            <div class="w-full mb-4 mr-0 sm:mr-4">
+                <label for="title" class="block text-sm font-medium text-gray-900 dark:text-white">Title*</label>
+                <input type="text" id="title" name="title" minlength="1" maxlength="20"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Cubo+ event!" required>
+            </div>
+            <div class="w-full">
+                <label for="location" class="block text-sm font-medium text-gray-900 dark:text-white">Location*</label>
+                <input type="text" id="location" name="location" minlength="1" maxlength="20"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Online / X site" required>
+            </div>
+        </div>
+
+        <div class="block md:flex mb-5 md:mb-0">
+            <div class="w-full mb-4 mr-0 sm:mr-4">
+                <label for="date-start" class="block text-sm font-medium text-gray-900 dark:text-white">Starting Date*</label>
+                <input type="date" id="date-start" name="dateStart"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required>
+            </div>
+
+            <div class="w-full mb-4 mr-0 sm:mr-4">
+                <label for="time-start" class="block text-sm font-medium text-gray-900 dark:text-white">Starting Time*</label>
+                <input pattern="" type="time" id="time-start" name="timeStart"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required>
+            </div>
+
+            <div id="date2" class="w-full mb-4 mr-0 sm:mr-4">
+                <label for="date-end" class="block text-sm font-medium text-gray-900 dark:text-white">Ending Date</label>
+                <input type="date" id="date-end" name="dateEnd"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+
+            <div class="w-full">
+                <label for="time-end" class="block text-sm font-medium text-gray-900 dark:text-white">Ending Time*</label>
+                <input pattern="" type="time" id="time-end" name="timeEnd"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required>
+            </div>
+        </div>
+        
+        <div class="mb-5 dark:text-white">
+            <label for="checkbox-single-date ">
+                <input type="checkbox" id="checkbox-single-date"> The event is on a single date
+            </label>
+        </div>
+
+        <div class="mb-5 block md:flex">
+            <div class="w-full mb-4 mr-0 sm:mr-4">
+                <label for="url" class="block text-sm font-medium text-gray-900 dark:text-white">Url</label>
+                <input type="url" id="url" name="url"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="https://example.com/">
+            </div>
+            <div class="w-full">
+                <label for="location" class="block text-sm font-medium text-gray-900 dark:text-white">Type*</label>
+                <select required name="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="type">
+                    <option value="" selected disabled>Choose an option</option>
+                    <option value="class">Class</option>
+                    <option value="meetup">Meetup</option>
+                    <option value="event">Event</option>
+                    <option value="organization">Organization</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="mb-5">
+            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+            <textarea placeholder="lorem ipsum dolor sit amet..." type="text" id="description" name="description" minlength="20" maxlength="500"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                ></textarea>
+        </div>
+
+        <div class="mb-5 dark:text-white">
+            <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image of the event</label>
+            <input type="file" id="image" name="image" accept="image/jpeg, image/jpg, image/png, image/webp" class="mt-1 mb-4 p-2 border rounded-md">
+        </div>
+  
+        <div class="mb-5">
+            <img id="preview" src="../img/events/default.png" class="mt-2 rounded-md shadow-md" alt="Image preview, upload something to preview the image" width="400px">
+        </div>
+
+        <a type="" href="events.html"
+            class="text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-500 dark:hover:bg-gray-600 dark:focus:ring-blue-800">Go back</a>
+        <button type="submit" id="uploadButton"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    </form>
+    
+    <script src="../js/dark-mode.js"></script>
+    <script src="../js/component.js"></script>
+    <script src="../js/create-event.js"></script>
+</body>
+</html>
