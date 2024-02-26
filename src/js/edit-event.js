@@ -194,10 +194,6 @@ function generateImagePreviews(svFiles, files) {
   let html = "";
   // Genera las vistas previas para todas las imágenes cargadas
   svFiles.forEach((file, index) =>  {
-    if (file == null) {
-      alert("archivo null")
-    }
-
     if(file !== null){
       html += `
       <div class="block w-48 relative">
@@ -212,9 +208,6 @@ function generateImagePreviews(svFiles, files) {
   });
 
   files.forEach((file, index) =>  {
-    if (file == null) {
-      alert("archivo null")
-    }
     if (file !== null) {
       html += `
               <div class="block w-48 relative">
