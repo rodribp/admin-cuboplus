@@ -1,5 +1,7 @@
-const imageInput = document.getElementById('image');
-const previewImage = document.getElementById('preview');
+var imgDeletedArray = [];
+var chargedImages = [];
+var imagesToUpload = [];
+var uploadedImages = [];
 const uploadButton = document.getElementById('uploadButton');
 const checkbox = document.getElementById('checkbox-single-date');
 const startDateInput = document.getElementById('date-start');
@@ -9,6 +11,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const uuid = urlParams.get("uuid");
 
 const fillFields = (data) => {
+  let html = "";
 
     const dateStart = new Date(data.start).toISOString().split("T")[0];
     const dateEnd = new Date(data.end).toISOString().split("T")[0];
@@ -30,7 +33,9 @@ const fillFields = (data) => {
     document.getElementById("url").value = data.eventUrl;
     document.getElementById("type").value = data.type;
     document.getElementById("description").value = data.description;
-    document.getElementById("preview").src = URL + "img/events/" + data.fileName;
+
+    chargedImages = data.files;
+    generateImagePreviews(chargedImages, uploadedImages);
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -108,35 +113,137 @@ document.addEventListener('DOMContentLoaded', async function () {
       });
   });
 
-imageInput.addEventListener('change', handleImagePreview);
+function handleImagePreview(id) {
+  let html = "";
+  let element = document.getElementById(id);
 
-function handleImagePreview() {
-    const file = imageInput.files[0];
-    //clears error if exists
-    clearError();
+  const file = element.files[0];
+  //clears error if exists
+  clearError();
 
-    if (file) {
-        // Verifies the type and size of the file
-        const isValidType = ['image/jpeg', 'image/png', 'image/webp'].includes(file.type);
-        const isValidSize = file.size <= 10 * 1024 * 1024; // 10 MB
+  if (file) {
+      // Verifies the type and size of the file
+      const isValidType = ['image/jpeg', 'image/png', 'image/webp'].includes(file.type);
+      const isValidSize = file.size <= 10 * 1024 * 1024; // 10 MB
 
-        if (isValidType && isValidSize) {
+      if (isValidType && isValidSize) {
           const reader = new FileReader();
 
           reader.onload = function (e) {
-            previewImage.src = e.target.result;
+              // Agrega la imagen al array de imágenes cargadas
+              uploadedImages.push(e.target.result);
+              imagesToUpload.push(file);
+
+              // Genera las vistas previas para todas las imágenes cargadas
+              
+              chargedImages.forEach((imageUrl, index) => {
+                  html += `<div class="block w-48 align-middle">
+                      <img src="${URL + "img/events/" + imageUrl}">
+                      <button type="button" onclick="deleteSvImage(${index})" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
+                        </svg>
+                      </button>
+                  </div>`;
+              });
+
+              uploadedImages.forEach((imageUrl, index) => {
+                html += `<div class="block w-48 align-middle">
+                    <img src="${imageUrl}">
+                    <button type="button" onclick="deleteImage(${index})" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
+                      </svg>
+                    </button>
+                </div>`;
+            });
+
+              // If 10 images haven't been uploaded, add a new input to add more
+              if (chargedImages.length + uploadedImages.length < 10) {
+                  html += `<div class="flex items-center justify-center w-48">
+                      <label for="image${chargedImages.length}" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                          <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                              <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+                              </svg>
+                              
+                              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
+                              <p class="text-xs text-gray-500 dark:text-gray-400">JPG, PNG or WEBP (MAX. 10MB)</p>
+                          </div>
+                          <input id="image${chargedImages.length}" onchange="handleImagePreview('image${chargedImages.length}')" accept="image/jpeg, image/jpg, image/png, image/webp" type="file" class="hidden" />
+                      </label>
+                  </div>`;
+              }
+
+              document.getElementById("gallery").innerHTML = html;
           };
 
           reader.readAsDataURL(file);
           uploadButton.disabled = false;
-        } else {
+      } else {
           // Shows an error message
           showError('Please select a valid format image (JPEG, PNG o WebP) weight less than 10MB.');
           imageInput.value = ''; // Clears the input
           uploadButton.disabled = true;
-        }
       }
-    }
+  }
+}
+
+function generateImagePreviews(svFiles, files) {
+  let html = "";
+  // Genera las vistas previas para todas las imágenes cargadas
+  svFiles.forEach((file, index) =>  {
+      html += `
+              <div class="block w-48 relative">
+                <img src="${URL + "img/events/" + file}">
+                <button type="button" onclick="deleteSvImage(${index})" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
+                    </svg>
+                </button>
+            </div>`;
+  });
+
+  files.forEach((file, index) =>  {
+      html += `
+              <div class="block w-48 relative">
+                <img src="${URL + "img/events/" + file}">
+
+                <button type="button" onclick="deleteSvImage(${index})" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
+                    </svg>
+                </button>
+            </div>`;
+  });
+
+  // Si aún no se han agregado 10 imágenes, agrega un nuevo input para cargar otra imagen
+  if (svFiles.length + files.length < 10) {
+      html += `<div class="flex items-center justify-center w-48">
+          <label for="image${files.length}" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+              <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                  <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+                  </svg>
+                  
+                  <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">JPG, PNG or WEBP (MAX. 10MB)</p>
+              </div>
+              <input id="image${files.length}" onchange="handleImagePreview('image${files.length}')" accept="image/jpeg, image/jpg, image/png, image/webp" type="file" class="hidden" />
+          </label>
+      </div>`;
+  }
+
+  document.getElementById("gallery").innerHTML = html;
+}
+
+function deleteImage(index) {
+  uploadedImages.splice(index, 1);
+  imagesToUpload.splice(index, 1); // Deletes image from the array
+  generateImagePreviews(chargedImages, uploadedImages); // Regenerates previews
+}
+
+function deleteSvImage(index) {
+  imgDeletedArray.push(index);
+  chargedImages.splice(index, 1);
+  generateImagePreviews(chargedImages, uploadedImages); // Regenerates previews
+}
 
 document.querySelector("#submit-form").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -162,7 +269,14 @@ document.querySelector("#submit-form").addEventListener("submit", async (e) => {
   }
 
   const formData = new FormData();
-  formData.append('image', document.getElementById("image").files[0]);
+  imagesToUpload.forEach((image) => {
+    formData.append('image', image);
+  });
+
+  imgDeletedArray.forEach((indicator) => {
+    formData.append('deleteIndicator', indicator);
+  })
+
 
   for (key in event) {
     formData.append(key, event[key]);

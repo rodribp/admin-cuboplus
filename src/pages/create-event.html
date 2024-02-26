@@ -88,14 +88,29 @@
                 ></textarea>
         </div>
 
-        <div class="mb-5 dark:text-white">
-            <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image of the event</label>
-            <input type="file" id="image" name="image" accept="image/jpeg, image/jpg, image/png, image/webp" class="mt-1 mb-4 p-2 border rounded-md">
+        
+        <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Images of the event</label>
+
+        <div id="gallery" class="mb-5 dark:text-white flex flex-wrap">
+            <div  class="flex items-center justify-center w-48">
+                
+                <label for="image0" id="preview" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+                        </svg>
+                        
+                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">JPG, PNG or WEBP (MAX. 10MB)</p>
+                    </div>
+                    <input id="image0" onchange="handleImagePreview('image0')" accept="image/jpeg, image/jpg, image/png, image/webp" type="file" class="hidden" />
+                </label>
+              </div>
         </div>
   
-        <div class="mb-5">
+        <!-- <div class="mb-5">
             <img id="preview" src="../img/events/default.png" class="mt-2 rounded-md shadow-md" alt="Image preview, upload something to preview the image" width="400px">
-        </div>
+        </div> -->
 
         <a type="" href="events.html"
             class="text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-500 dark:hover:bg-gray-600 dark:focus:ring-blue-800">Go back</a>

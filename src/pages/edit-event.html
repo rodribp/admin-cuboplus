@@ -87,13 +87,10 @@
                 ></textarea>
         </div>
 
-        <div class="mb-5 dark:text-white">
-            <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image of the event</label>
-            <input type="file" id="image" name="image" accept="image/jpeg, image/jpg, image/png, image/webp" class="mt-1 mb-4 p-2 border rounded-md">
-        </div>
-  
-        <div class="mb-5">
-            <img id="preview" src="" class="mt-2 rounded-md shadow-md" alt="Image preview, upload something to preview the image" width="400px">
+        <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Images of the event</label>
+
+        <div id="gallery" class="mb-5 dark:text-white flex flex-wrap items-center">
+            
         </div>
 
         <a type="" href="events.html"
@@ -102,7 +99,7 @@
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
     </form>
 
-    <script src="../js/dark-mode.js"></script>
+    <script src="../js/dark-mode.js"></script>  
     <script src="../js/component.js"></script>
     <script src="../js/edit-event.js"></script>
 </body>

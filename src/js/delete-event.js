@@ -18,6 +18,18 @@ document.addEventListener("DOMContentLoaded", async (e) => {
     }
 });
 
+const chargeImages = (imgsArr) => {
+    let html = "";
+
+    imgsArr.map((file) => {
+        html += `<div class="block w-48 relative">
+                    <img src="${URL + "img/events/" + file}">
+                </div>`;
+    });
+
+    document.getElementById("gallery").innerHTML = html;
+}
+
 const fillInfo = (data) => {
     document.getElementById("title").innerText = data.title;
     document.getElementById("location").innerText = data.location;
@@ -26,7 +38,8 @@ const fillInfo = (data) => {
     document.getElementById("type").innerText = data.type;
     document.getElementById("url").innerText = data.eventUrl || "None";
     document.getElementById("url").href = data.eventUrl || "#";
-    document.getElementById("image").src = URL + "img/events/" + data.fileName;
+    
+    chargeImages(data.files);
 }
 
 document.getElementById("delete-button").addEventListener("click", async (e) => {
