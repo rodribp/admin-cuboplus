@@ -137,13 +137,16 @@ function handleImagePreview(id) {
               // Genera las vistas previas para todas las imágenes cargadas
               
               chargedImages.forEach((imageUrl, index) => {
+                if (URL !== null && imageUrl !== null ) {
                   html += `<div class="block w-48 align-middle">
-                      <img src="${URL + "img/events/" + imageUrl}">
-                      <button type="button" onclick="deleteSvImage(${index})" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
-                        </svg>
-                      </button>
-                  </div>`;
+                  <img src="${URL + "img/events/" + imageUrl}">
+                  <button type="button" onclick="deleteSvImage(${index})" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
+                    </svg>
+                  </button>
+              </div>`;
+          
+                }
               });
 
               uploadedImages.forEach((imageUrl, index) => {
@@ -191,26 +194,39 @@ function generateImagePreviews(svFiles, files) {
   let html = "";
   // Genera las vistas previas para todas las imágenes cargadas
   svFiles.forEach((file, index) =>  {
+    if (file == null) {
+      alert("archivo null")
+    }
+
+    if(file !== null){
       html += `
-              <div class="block w-48 relative">
-                <img src="${URL + "img/events/" + file}">
-                <button type="button" onclick="deleteSvImage(${index})" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
-                    </svg>
-                </button>
-            </div>`;
+      <div class="block w-48 relative">
+        <img src="${URL + "img/events/" + file}">
+        <button type="button" onclick="deleteSvImage(${index})" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
+            </svg>
+        </button>
+    </div>`;
+    }
+    
   });
 
   files.forEach((file, index) =>  {
+    if (file == null) {
+      alert("archivo null")
+    }
+    if (file !== null) {
       html += `
               <div class="block w-48 relative">
-                <img src="${URL + "img/events/" + file}">
+                <img src="${file}">
 
-                <button type="button" onclick="deleteSvImage(${index})" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <button type="button" onclick="deleteImage(${index})" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
                     </svg>
                 </button>
             </div>`;
+    }
+      
   });
 
   // Si aún no se han agregado 10 imágenes, agrega un nuevo input para cargar otra imagen
@@ -241,7 +257,7 @@ function deleteImage(index) {
 
 function deleteSvImage(index) {
   imgDeletedArray.push(index);
-  chargedImages.splice(index, 1);
+  chargedImages.splice(index, 1, null);
   generateImagePreviews(chargedImages, uploadedImages); // Regenerates previews
 }
 
