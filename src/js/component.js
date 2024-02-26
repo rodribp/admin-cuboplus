@@ -1,5 +1,6 @@
 const URL = "http://localhost:4000/";
 
+
 function showError(message) {
     const errorElement = document.getElementById('error-message');
     errorElement.textContent = message;
@@ -9,6 +10,16 @@ function showError(message) {
 function clearError() {
     const errorElement = document.getElementById('error-message');
     errorElement.textContent = '';
+}
+
+function showSuccess() {
+  Swal.fire({
+    title: "Done!",
+    text: "The event information was modified successfully!",
+    icon: "success",
+    showConfirmButton: false,
+    timer: 4500
+  });
 }
 
 const saveToken = (token) => {

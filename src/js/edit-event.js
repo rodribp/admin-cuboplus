@@ -303,7 +303,10 @@ document.querySelector("#submit-form").addEventListener("submit", async (e) => {
       const result = await response.json();
 
       if (result.status) { 
-        window.location.href = "events.html";
+        showSuccess();
+        setTimeout(() => {
+          window.location.href = "events.html";
+        }, 2500);
         return;
       }
 
