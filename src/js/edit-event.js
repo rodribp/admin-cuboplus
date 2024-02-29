@@ -159,8 +159,12 @@ function handleImagePreview(id) {
                 </div>`;
             });
 
+            const notNullImages = chargedImages.filter((file) => {
+              return file !== null;
+            })
+
               // If 10 images haven't been uploaded, add a new input to add more
-              if (chargedImages.length + uploadedImages.length < 10) {
+              if (notNullImages.length + uploadedImages.length < 10) {
                   html += `<div class="flex items-center justify-center w-48">
                       <label for="image${chargedImages.length}" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                           <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -222,8 +226,12 @@ function generateImagePreviews(svFiles, files) {
       
   });
 
+  const notNullImages = svFiles.filter((file) => {
+    return file !== null;
+  })
+
   // Si aún no se han agregado 10 imágenes, agrega un nuevo input para cargar otra imagen
-  if (svFiles.length + files.length < 10) {
+  if (notNullImages.length + files.length < 10) {
       html += `<div class="flex items-center justify-center w-48">
           <label for="image${files.length}" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
               <div class="flex flex-col items-center justify-center pt-5 pb-6">

@@ -1,4 +1,4 @@
-const URL = "http://localhost:4000/";
+const URL = "https://api-cuboplus.onrender.com/";
 
 function showError(message) {
     const errorElement = document.getElementById('error-message');
